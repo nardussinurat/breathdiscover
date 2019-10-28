@@ -65,13 +65,13 @@ function grabEm()
 {
 	touch pges.txt
 	file="pges.txt"
-	apikey="39e6888da2eca168a64925c44cdd72dff00866ad"
+	apikey="789d6fe79e63425735537a33abd14934a97d57c1"
 	###########Start###############
 	who="${1}"
 	what="${2}"
 	###############################
 	if [ $what == "googledork" ]; then
-    echo -e "${RED}nardus@root${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
+    echo -e "${RED}nsroot@sys${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
     count=0
     while [ $count=0 ]; do
     	( lynx -dump "https://www.bing.com/search?q=s$who&qs=n&form=QBRE&sp=-1&pq=$who&first=$count&FORM=PERE" |  grep -oE --color '[[:alnum:]_.]+@[[:alnum:]_]+[.][[:alnum:]]+' | sort -u )
@@ -81,39 +81,60 @@ function grabEm()
     fi
   done
 	elif [ $what == "corp" ]; then
-    echo -e "${RED}nardus@root${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
+    echo -e "${RED}nsroot@sys${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
 		( lynx "https://api.hunter.io/v2/domain-search?company=${1}&api_key=$apikey" -dump | grep -oE --color '[[:alnum:]_.]+@[[:alnum:]_]+[.][[:alnum:]]+' )
+	
 	elif [ $what == "domainname" ]; then
-    echo -e "${RED}nardus@root${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
+    echo -e "${RED}nsroot@sys${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
 		( lynx "https://api.hunter.io/v2/domain-search?domain=$who&api_key=$apikey" -dump | grep -oE --color '[[:alnum:]_.]+@[[:alnum:]_]+[.][[:alnum:]]+' )
+	
+	elif [ $what == "emailv" ]; then
+    echo -e "${RED}nsroot@sys${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
+		( lynx "https://api.hunter.io/v2/email-verifier?email=$who&api_key=$apikey" -dump | grep -oE --color '[[:alnum:]_.]+@[[:alnum:]_]+[.][[:alnum:]]+' )
+
+	elif [ $what == "efind" ]; then
+    echo -e "${RED}nsroot@sys${RESET}:~# Hehe${RED},${RESET} ok one sec - Scanning ${RED}teh interwebz${RESET} for ${RED}emails${RESET}"
+		( lynx "https://api.hunter.io/v2/email-finder?domain=$who&api_key=$apikey" -dump | grep -oE --color '[[:alnum:]_.]+@[[:alnum:]_]+[.][[:alnum:]]+' )
 	fi
+
 }
 ###################################################
 
 ##################################################
 function main_menu()
 {
-	select mainmnu in "Mau Pakai Google Dork" "Domain" "Atau Company"
+	select mainmnu in "Google Dork" "Domain" "Company" "Email Verification" "Email Finder"
 	do
 		case $mainmnu in 
 			"Google Dork")
-					echo -e "${RED}nardus@root${RESET}:~# Roulette it is boss, what's the dork?\t"
+					echo -e "${PURPLE}nsroot@sys${RESET}:~# Roulette it is boss, what's the dork?\t"
 					read dorks
 					grabEm "${dorks}" "googledork"
 			;;
 			
 			"Domain")
-					echo -e "${RED}nardus@root${RESET}:~# So..what's the domain?\t"
+					echo -e "${PURPLE}nsroot@sys${RESET}:~# So..what's the domain?\t"
 					read tlds
 					grabEm "${tlds}" "domainname"
 			;;
 			
 			"Company")
-					echo -e "${RED}nardus@root${RESET}:~# Ah, corporations - fuck em'. Who is it?\t"
+					echo -e "${PURPLE}nsroot@sys${RESET}:~# Ah, corporations - fuck em'. Who is it?\t"
 					read corps
 					grabEm "${corps}" "corp"
 			;;
 
+			"Email Verification")
+					echo -e "${PURPLE}nsroot@sys${RESET}:~# OK, Email Verification - Damn it'. Lets Go?\t"
+					read emailv
+					grabEm "${emailv}" "emailv"
+			;;
+
+			"Email Finder")
+					echo -e "${PURPLE}nsroot@sys${RESET}:~# OK, Email Finder -hmmm. Lets Go?\t"
+					read efind
+					grabEm "${efind}" "efind"
+			;;
 				*)
 					echo -e "${RED}Let's try again${RESET}, lol."
 					echo
